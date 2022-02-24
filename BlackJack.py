@@ -5,6 +5,11 @@ RANKS = {'A': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
 CARDS_NAMES = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
 
 
+# we have the players and dealer on the table
+# in the constructor, it asks for the number of players
+# play in this class is the function that keeps the game playing
+# judge is also checking the rule of the game if any player is busted or wins, that player doesn't play at that round anymore
+
 class Table:
 
     def __init__(self, numPlayers):
@@ -77,6 +82,11 @@ class Table:
         return winners
 
 
+# players are instance of this class
+# there are 2 kinds of winning and losing: relative to dealer and final.
+# if the value of player's hand is 21, player wins
+# if th value is bigger than 21, player is busted regardless of what's on dealer's hand
+# the player has an instance of hand, in that hand, value and cards are managed to calculate the total value and card names
 class Player:
     def __init__(self, num):
         self.hand = Hand()
@@ -102,7 +112,7 @@ class Player:
 
     def showDetail(self):
         return 'Player: ' + str(self.num) + " \t Current hand -> " + self.hand.show() + " Total value -> " + str(
-            self.getValue()) + " isbusted: " + str(self.busted) + " --isWinner: " + str(self.winner)
+            self.getValue()) + " isBusted: " + str(self.busted) + " --isWinner: " + str(self.winner)
 
     def getValue(self):
         return self.hand.getValue()
@@ -112,6 +122,10 @@ class Player:
     # if currentValue == 21:
 
 
+# This is the class to create instance of dealer
+# it needs to keep the cards, shuffle, give them to the users (pop function)
+# the dealer has an instance of hand, in that hand, value and cards are managed
+# the dealer also needs to keep the total value in mind for judging purposes
 class Dealer:
     def __init__(self):
         self.hand = Hand()
@@ -143,6 +157,7 @@ class Dealer:
         return self.hand.getValue()
 
 
+# both player and dealer have hand, if a card is added, it should be added to the cards in hand
 class Hand:
     def __init__(self):
         self.cards = []
@@ -163,6 +178,7 @@ class Hand:
         return currentHand.strip()
 
 
+# Each card has a name and value. The object of this class are given by the dealer each time dealer wants to give card
 class Card:
     def __init__(self, name):
         self.name = name
@@ -177,5 +193,6 @@ class Card:
 def main():
     t1 = Table(2)
     t1.play()
+
 
 main()
